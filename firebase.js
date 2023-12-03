@@ -7,6 +7,8 @@ import {
   getDocs,
   getFirestore,
   setDoc,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
@@ -40,7 +42,17 @@ const getAllFortunes = async () => {
   const fortuneDoc = await getDoc(fortuneRef);
   if (fortuneDoc.exists()) {
     const newData = fortuneDoc.data();
-    console.log("newData", newData);
+    const allFortunes = Object.values(newData).flat();
+    return allFortunes;
+  }
+};
+
+const getExcellentFortunes = async () => {
+  const fortuneRef = doc(fortuneCollection, "fortunes");
+  const fortuneDoc = await getDoc(fortuneRef);
+  if (fortuneDoc.exists()) {
+    const newData = fortuneDoc.data();
+    return newData.excellent;
   }
 };
 
@@ -49,9 +61,52 @@ const getGoodFortunes = async () => {
   const fortuneDoc = await getDoc(fortuneRef);
   if (fortuneDoc.exists()) {
     const newData = fortuneDoc.data();
-    // console.log("newData", newData);
     return newData.good;
   }
 };
 
-export { db, auth, app, getAllFortunes, getGoodFortunes };
+const getAverageFortunes = async () => {
+  const fortuneRef = doc(fortuneCollection, "fortunes");
+  const fortuneDoc = await getDoc(fortuneRef);
+  if (fortuneDoc.exists()) {
+    const newData = fortuneDoc.data();
+    return newData.average;
+  }
+};
+
+const getBadFortunes = async () => {
+  const fortuneRef = doc(fortuneCollection, "fortunes");
+  const fortuneDoc = await getDoc(fortuneRef);
+  if (fortuneDoc.exists()) {
+    const newData = fortuneDoc.data();
+    return newData.bad;
+  }
+};
+
+const getTerribleFortunes = async () => {
+  const fortuneRef = doc(fortuneCollection, "fortunes");
+  const fortuneDoc = await getDoc(fortuneRef);
+  if (fortuneDoc.exists()) {
+    const newData = fortuneDoc.data();
+    return newData.terrible;
+  }
+};
+
+const addFortune = (grade, list) => {
+  updateDoc(doc(db, "fortune", "fortunes"), {
+    [grade]: arrayUnion(...list),
+  });
+};
+
+export {
+  db,
+  auth,
+  app,
+  getAllFortunes,
+  getExcellentFortunes,
+  getGoodFortunes,
+  getAverageFortunes,
+  getBadFortunes,
+  getTerribleFortunes,
+  addFortune,
+};
