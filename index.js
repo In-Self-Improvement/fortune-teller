@@ -11,7 +11,7 @@ import {
 const app = express();
 const port = 3000;
 
-// 운세 데이터
+// fortune data
 const allFortune = await getAllFortunes();
 const excellentFortune = await getExcellentFortunes();
 const goodFortune = await getGoodFortunes();
@@ -19,7 +19,6 @@ const averageFortune = await getAverageFortunes();
 const badFortune = await getBadFortunes();
 const terribleFortune = await getTerribleFortunes();
 
-// 랜덤 운세를 반환하는 라우트
 app.get("/fortune/all", (req, res) => {
   const randomIndex = Math.floor(Math.random() * allFortune.length);
   res.send({ fortune: allFortune[randomIndex] });
@@ -51,7 +50,5 @@ app.get("/fortune/terrible", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(
-    `Fortune API 서버가 http://localhost:${port} 에서 실행 중입니다.`
-  );
+  console.log(`Fortune API server http://localhost:${port} `);
 });

@@ -12,8 +12,12 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
+// import { config } from "dotenv";
+// config();
 import { config } from "dotenv";
-config();
+import path from "path";
+
+config({ path: path.join(process.cwd(), ".env") });
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
